@@ -1,6 +1,9 @@
 import 'package:dolat_digital/homepage.dart';
+import 'package:dolat_digital/verifyemail.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'login.dart';
 
@@ -18,7 +21,12 @@ class _WrapperState extends State<Wrapper> {
       body: StreamBuilder(stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context,snapshot){
         if(snapshot.hasData){
-          return Homepage();
+          print(snapshot.data);
+          if(snapshot.data!.emailVerified){
+             return Homepage();
+          }else{
+            return Verify();
+          }
         }else {
           return Login();
          }
@@ -27,3 +35,6 @@ class _WrapperState extends State<Wrapper> {
     );
   }
 }
+
+
+
